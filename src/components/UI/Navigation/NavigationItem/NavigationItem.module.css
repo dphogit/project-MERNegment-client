@@ -1,0 +1,29 @@
+.NavigationItem {
+  font-size: 20px;
+  color: rgba(255, 255, 255);
+  /* padding: 0 1.75rem !important; */
+}
+
+.NavigationItem:hover {
+  color: white !important;
+}
+
+.Active {
+  color: white !important;
+}
+
+.DropdownMenu {
+  background-color: #293241;
+}
+
+.DropdownItem {
+  color: white;
+  font-size: 20px;
+  padding: 8px 16px;
+}
+
+@media screen and (min-width: 768px) {
+  .NavigationItem {
+    padding: 0 1.75rem !important;
+  }
+}

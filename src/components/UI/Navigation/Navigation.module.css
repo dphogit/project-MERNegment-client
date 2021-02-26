@@ -1,0 +1,26 @@
+.NavBar {
+  background-color: #293241;
+}
+
+.NavBarEnd {
+  display: flex;
+  justify-content: flex-end;
+  margin-right: 4rem;
+  align-items: center;
+}
+
+.NavBarEnd li {
+  list-style-type: none;
+}
+
+@media (max-width: 768px) {
+  .Avatar {
+    display: none;
+  }
+  .NavBarEnd {
+    justify-content: flex-start;
+  }
+  .Profile {
+    padding: 0 0 1rem;
+  }
+}

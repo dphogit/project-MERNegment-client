@@ -1,0 +1,33 @@
+.GraphicWrapper {
+  width: 465px;
+  position: relative;
+  overflow: hidden;
+  border-right: 1px solid;
+  border-radius: 20px 0 0 20px;
+  z-index: 100;
+  background-color: #293241;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.Image {
+  position: absolute;
+  top: -9999px;
+  left: -9999px;
+  right: -9999px;
+  bottom: -9999px;
+  z-index: 1;
+  opacity: 0.075;
+  margin: auto;
+  width: 100%;
+}
+
+.Text {
+  text-align: right;
+  position: absolute;
+  color: white;
+  width: 90%;
+  margin-right: 16px;
+  font-weight: regular;
+}
