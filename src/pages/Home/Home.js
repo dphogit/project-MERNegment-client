@@ -6,7 +6,6 @@ import classes from "./Home.module.css";
 const Home = ({
   logoutHandler,
   token,
-  userId,
   activePath,
   setActivePath,
   setUser,
@@ -15,7 +14,6 @@ const Home = ({
   const [username, setUsername] = useState(null);
 
   useEffect(() => {
-    // TODO outsource the getUser into Redux
     const getUser = async () => {
       try {
         const response = await fetch(
@@ -42,8 +40,9 @@ const Home = ({
       }
     };
     getUser();
+    localStorage.setItem("currentRoute", "/");
     setActivePath("home");
-  }, [token, userId, setActivePath, setUser]);
+  }, [token, setActivePath, setUser]);
 
   const header = username
     ? `Welcome back ${username}, let's get to work...`

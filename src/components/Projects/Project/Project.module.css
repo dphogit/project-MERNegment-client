@@ -1,0 +1,58 @@
+.ProjectCard {
+  width: 325px;
+  height: 300px;
+}
+
+.CardHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px;
+}
+
+.CardTitle {
+  margin-bottom: 0;
+}
+
+.TripleDots {
+  border: none;
+  background-color: inherit;
+}
+
+.TripleDots::after {
+  display: none;
+}
+
+.CardBody {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.Dates {
+  display: flex;
+  justify-content: space-between;
+}
+
+.SectionText {
+  margin-bottom: 0;
+}
+
+.CardFooter {
+  display: flex;
+  align-items: center;
+}
+
+.FooterText {
+  margin-bottom: 0;
+  padding-right: 8px;
+}
+
+.TeamAvatars {
+  display: flex;
+  align-items: center;
+}
+
+.SingleAvatar {
+  margin: 0 8px;
+}

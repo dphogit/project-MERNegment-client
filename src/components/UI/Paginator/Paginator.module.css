@@ -1,0 +1,18 @@
+.Paginator {
+  display: flex;
+  justify-content: flex-end;
+  margin: 24px;
+}
+
+.PaginatorBtn {
+  width: auto;
+  margin: 12px;
+  background-color: #293241;
+  color: white;
+  font-size: 20px;
+}
+
+.PaginatorBtn:hover {
+  opacity: 0.9;
+  color: white;
+}

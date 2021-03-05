@@ -1,18 +1,15 @@
-// TODO Commit changes
 import React, { useState, useEffect, useCallback, Fragment } from "react";
-import { Switch, Route, Redirect } from "react-router-dom";
+import { Switch, Route, Redirect, withRouter } from "react-router-dom";
 
 import Auth from "./pages/Auth/Auth";
 import Home from "./pages/Home/Home";
+import Projects from "./pages/Projects/Projects";
 // import Modal from "./components/UI/Modal/Modal";
 import EditProfile from "./components/EditProfile/EditProfile";
 // import ErrorHandler from "./components/UI/ErrorHandler/ErrorHandler";
 import "./App.css";
 
-// TODO Introduce Redux for asynchronous calls and general state management
-// * isAuth, login, logout, signup, signin actions ?
-
-function App() {
+const App = ({ history, location }) => {
   const [isAuth, setIsAuth] = useState(false);
   const [token, setToken] = useState(null);
   const [userId, setUserId] = useState(null);
@@ -44,7 +41,11 @@ function App() {
     setIsAuth(true);
     setToken(token);
     setUserId(userIdToSet);
-  }, [setAutoLogout, isAuth]);
+    // TODO set up the current page they are on in local storage for easy reload => when getuser is outsourced into App.js/Redux
+    // if (localStorage.getItem("currentRoute")) {
+    //   history.push(localStorage.getItem("currentRoute"));
+    // }
+  }, [setAutoLogout, isAuth, history]);
 
   const logoutHandler = () => {
     setIsAuth(false);
@@ -54,6 +55,7 @@ function App() {
     localStorage.removeItem("token");
     localStorage.removeItem("expiryDate");
     localStorage.removeItem("userId");
+    localStorage.removeItem("currentRoute");
   };
 
   const routes = isAuth ? (
@@ -61,29 +63,32 @@ function App() {
       <Route
         exact
         path="/"
-        render={() => {
-          return (
-            <Home
-              setUser={setUser}
-              token={token}
-              userId={userId}
-              logoutHandler={logoutHandler}
-              error={error}
-              setError={setError}
-              activePath={activePath}
-              setActivePath={setActivePath}
-              user={user}
-            />
-          );
-        }}
+        render={() => (
+          <Home
+            setUser={setUser}
+            token={token}
+            userId={userId}
+            logoutHandler={logoutHandler}
+            error={error}
+            setError={setError}
+            activePath={activePath}
+            setActivePath={setActivePath}
+            user={user}
+          />
+        )}
       />
-      {/* <Route 
+      <Route
         exact
         path="/projects"
         render={() => (
-          <Projects />
+          <Projects
+            logoutHandler={logoutHandler}
+            activePath={activePath}
+            setActivePath={setActivePath}
+            user={user}
+          />
         )}
-      /> */}
+      />
       {/* <Route 
         exact
         path="/tasks"
@@ -118,6 +123,6 @@ function App() {
       {routes}
     </Fragment>
   );
-}
+};
 
-export default App;
+export default withRouter(App);

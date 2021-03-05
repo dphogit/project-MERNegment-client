@@ -1,10 +1,8 @@
 import React from "react";
 
-import classes from "./Card.module.css";
-
-const Card = ({ styles, children }) => {
+const Card = ({ styles, children, className }) => {
   return (
-    <div className={classes.Card} style={styles}>
+    <div className={className} style={styles}>
       {children}
     </div>
   );

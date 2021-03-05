@@ -57,11 +57,11 @@ const EditProfile = ({ user, token }) => {
       );
       const json = await response.json();
 
-      // TODO Add error checking when validation on server side is working
       if (response.status >= 400) {
         validationMessageHandler(json.message);
         throw new Error(json.message);
       }
+      // TODO !!! Incoporate user feedback modal (loading, done etc)
       window.location.reload();
       console.log(json);
     } catch (error) {
@@ -91,6 +91,7 @@ const EditProfile = ({ user, token }) => {
       title="Edit Profile"
       cancelText="Cancel"
       actionText="Save Changes"
+      idTarget="editProfile"
     >
       <form>
         {<Avatar imageUrl={imagePreview} avatarStyles={avatarStyles} />}

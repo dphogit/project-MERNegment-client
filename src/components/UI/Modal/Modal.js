@@ -3,6 +3,8 @@ import React from "react";
 import Button from "../Button/Button";
 import classes from "./Modal.module.css";
 
+// TODO Create user feedback modals when all routes are completed e.g. loading => when user successfully does something && closes the modal
+
 const Modal = ({
   title,
   children,
@@ -10,11 +12,13 @@ const Modal = ({
   onCloseModal,
   cancelText,
   actionText,
+  idTarget,
 }) => {
   return (
     <div
       className="modal fade"
-      id="staticBackdrop"
+      // id="staticBackdrop"
+      id={idTarget}
       data-bs-backdrop="static"
       data-bs-keyboard="false"
       tabIndex="-1"
@@ -35,14 +39,13 @@ const Modal = ({
           <div className="modal-footer">
             <Button
               btnType="dismiss-modal"
-              type="button"
               className="btn btn-danger"
               clickEvent={onCloseModal}
             >
               {cancelText}
             </Button>
             <Button
-              type="button"
+              btnType="button"
               className="btn btn-primary"
               clickEvent={modalAction}
             >

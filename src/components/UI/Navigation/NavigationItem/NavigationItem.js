@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 import Button from "../../Button/Button";
 import Avatar from "../../Image/Avatar";
@@ -36,8 +37,10 @@ const NavigationItem = ({
         <li>
           <Button
             className={`dropdown-item ${classes.DropdownItem}`}
-            // clickEvent={showModal}
+            // modalIdTarget="staticBackdrop"
+            modalIdTarget="editProfile"
             btnType="toggle-modal"
+            clickEvent={() => console.log("Editing Profile...")}
           >
             Edit Profile
           </Button>
@@ -54,13 +57,12 @@ const NavigationItem = ({
     </li>
   ) : (
     <li className={`nav-item ${className}`}>
-      <a className={navLinkClassName} href={link || "#"}>
+      <Link className={navLinkClassName} to={link || "#"}>
         {name}
-      </a>
+      </Link>
     </li>
   );
 
-  // FIXME Get the style of the avatar right
   if (name === "Avatar") {
     const url = `http://localhost:8080/${profilePictureUrl}`;
     const avatarStyles = {

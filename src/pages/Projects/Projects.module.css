@@ -1,0 +1,12 @@
+.AddBtn {
+  width: auto;
+  margin: 12px 0 24px;
+  background-color: #293241;
+  color: white;
+  font-size: 20px;
+}
+
+.AddBtn:hover {
+  opacity: 0.9;
+  color: white;
+}

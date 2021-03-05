@@ -28,6 +28,7 @@ const Navigation = ({ logoutHandler, activePath, profilePictureUrl }) => {
               <NavigationItem
                 name="Projects"
                 activePath={activePath === "projects"}
+                link="/projects"
               />
               <NavigationItem
                 name="Task Management"
@@ -41,7 +42,6 @@ const Navigation = ({ logoutHandler, activePath, profilePictureUrl }) => {
                 dropdown
                 logoutHandler={logoutHandler}
               />
-              {/* TODO Change this to actual avatar */}
               <NavigationItem
                 className={classes.Avatar}
                 name="Avatar"
