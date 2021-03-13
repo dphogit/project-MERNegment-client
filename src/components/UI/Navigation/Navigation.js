@@ -30,10 +30,10 @@ const Navigation = ({ logoutHandler, activePath, profilePictureUrl }) => {
                 activePath={activePath === "projects"}
                 link="/projects"
               />
-              <NavigationItem
+              {/* <NavigationItem
                 name="Task Management"
                 activePath={activePath === "tasks"}
-              />
+              /> */}
             </ul>
             <div className={classes.NavBarEnd}>
               <NavigationItem

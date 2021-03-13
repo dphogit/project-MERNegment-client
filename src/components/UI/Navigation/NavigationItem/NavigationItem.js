@@ -69,7 +69,13 @@ const NavigationItem = ({
       height: "50px",
       width: "50px",
     };
-    navItem = <Avatar imageUrl={url} avatarStyles={avatarStyles} />;
+    navItem = (
+      <Avatar
+        imageUrl={url}
+        avatarStyles={avatarStyles}
+        className={className}
+      />
+    );
   }
 
   return navItem;

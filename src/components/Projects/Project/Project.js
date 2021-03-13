@@ -3,6 +3,7 @@ import React from "react";
 import Card from "../../UI/Card/Card";
 import Button from "../../UI/Button/Button";
 import Avatar from "../../UI/Image/Avatar";
+import { dateFormatter } from "../../../util/dateFormatter";
 import classes from "./Project.module.css";
 
 // * Header, Body, Footer => Project Card Component (bottom) which is default export
@@ -26,32 +27,64 @@ const Header = ({
     setIsEditMode(true);
   };
 
+  const onViewHandler = (projectId, projects) => {
+    console.log("Viewing Project...");
+    setProjectId(projectId);
+    setLoadedProject(loadProject(projectId, projects));
+  };
+
+  // Determine whether the first option is either joining or leaving the project (text only)
+  let joinOrLeaveBtnText = "Join Project";
+  const userId = localStorage.getItem("userId");
+  const matched = project.team.filter((user) => user._id === userId);
+  if (matched.length) {
+    joinOrLeaveBtnText = "Leave Project";
+  }
+
+  // For rendering the edit/delete options for the user
+  const isCreator = userId === project.creator;
+
   return (
     <div className={`card-header ${classes.CardHeader}`}>
       <h5 className={`card-title ${classes.CardTitle}`}>{project.title}</h5>
       <div className="dropdown">
+        {/* TODO Buttons can be changed to made visible depending if it is the logged in user's project */}
         <Button btnType="options" className={classes.TripleDots} />
         <ul className="dropdown-menu">
           <li>
             <Button
               btnType="toggle-modal"
               className="dropdown-item"
-              modalIdTarget="editProject"
-              clickEvent={() => onStartEditHandler(project._id, projects)}
+              modalIdTarget="viewProject"
+              clickEvent={() => onViewHandler(project._id, projects)}
             >
-              Edit Project
+              {joinOrLeaveBtnText}
             </Button>
           </li>
-          <li>
-            <Button
-              btnType="toggle-modal"
-              className="dropdown-item"
-              modalIdTarget="deleteProject"
-              clickEvent={() => setProjectId(project._id)}
-            >
-              Delete Project
-            </Button>
-          </li>
+          {isCreator && (
+            <li>
+              <Button
+                btnType="toggle-modal"
+                className="dropdown-item"
+                modalIdTarget="editProject"
+                clickEvent={() => onStartEditHandler(project._id, projects)}
+              >
+                Edit Project
+              </Button>
+            </li>
+          )}
+          {isCreator && (
+            <li>
+              <Button
+                btnType="toggle-modal"
+                className="dropdown-item"
+                modalIdTarget="deleteProject"
+                clickEvent={() => onViewHandler(project._id, projects)}
+              >
+                Delete Project
+              </Button>
+            </li>
+          )}
         </ul>
       </div>
     </div>
@@ -61,11 +94,13 @@ const Header = ({
 // * Project Card Body (Description, Creation Date, Deadline Date)
 const Body = ({ project }) => {
   const description = project.description;
-  const createdAt = new Date(project.createdAt).toISOString().split("T")[0];
-  const deadline = new Date(project.deadline).toISOString().split("T")[0];
+  const createdAt = dateFormatter(project.createdAt);
+  const deadline = dateFormatter(project.deadline);
+  const overdue = new Date() > new Date(project.deadline);
 
   return (
     <div className={`card-body ${classes.CardBody}`}>
+      {overdue && <section className={classes.Overdue}>Late!!!</section>}
       <section>{description}</section>
       <section className={classes.Dates}>
         <section>
@@ -118,7 +153,7 @@ const Footer = ({ project }) => {
         ? (moreUsersText = "+ 1 Other")
         : (moreUsersText = `+ ${numAdditionalUsers} Others`);
   } else {
-    // Just profuce avatars for array size of less than MAX_TEAM_MEMBERS
+    // Just produce avatars for array size of less than MAX_TEAM_MEMBERS
     teamAvatars = produceAvatars(project.team);
   }
 
@@ -140,6 +175,7 @@ const Project = ({
   setIsEditMode,
   setLoadedProject,
   projects,
+  mode,
 }) => {
   return (
     <Card className={`${classes.ProjectCard} card`}>
@@ -149,6 +185,7 @@ const Project = ({
         setProjectId={setProjectId}
         setIsEditMode={setIsEditMode}
         setLoadedProject={setLoadedProject}
+        mode={mode}
       />
       <Body project={project} />
       <Footer project={project} />

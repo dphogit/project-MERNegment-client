@@ -1,7 +1,7 @@
 .Paginator {
   display: flex;
   justify-content: flex-end;
-  margin: 24px;
+  margin: 24px 12px;
 }
 
 .PaginatorBtn {

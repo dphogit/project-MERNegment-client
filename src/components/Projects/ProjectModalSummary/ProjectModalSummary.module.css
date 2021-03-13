@@ -1,0 +1,14 @@
+.SummaryHeading {
+  font-size: 20px;
+  margin: 12px 0;
+}
+
+.Invalid {
+  border: 1px solid red;
+  background-color: #fda49a;
+  color: red;
+  margin-top: 5px;
+  font-size: 20px;
+  text-align: center;
+  padding: 4px;
+}

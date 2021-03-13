@@ -1,8 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 
 import Modal from "../../UI/Modal/Modal";
+import Summary from "../ProjectModalSummary/ProjectModalSummary";
 
-const DeleteProject = ({ projectIdToDelete, setProjectId, setProjects }) => {
+const DeleteProject = ({ setProjectId, setProjects, loadedProject }) => {
+  const [invalidMessage, setInvalidMessage] = useState(null);
+
   const deleteProjectHandler = async (projectId) => {
     try {
       const response = await fetch(
@@ -20,6 +23,7 @@ const DeleteProject = ({ projectIdToDelete, setProjectId, setProjects }) => {
       const message = json.message;
 
       if (response.status >= 400) {
+        validationMessageHandler(json.message);
         throw new Error(message);
       }
 
@@ -42,17 +46,27 @@ const DeleteProject = ({ projectIdToDelete, setProjectId, setProjects }) => {
     console.log("Deletion Cancelled");
   };
 
+  const validationMessageHandler = (message) => {
+    // Purely for UI only, validation of data is done on backend
+    setInvalidMessage(message);
+  };
+
   return (
     <Modal
       idTarget="deleteProject"
-      title="Delete Project Confirmation"
+      title="Delete Confirmation"
       onCloseModal={() => onCloseModal()}
-      modalAction={() => deleteProjectHandler(projectIdToDelete)}
+      modalAction={() => deleteProjectHandler(loadedProject._id)}
       cancelText="Cancel"
       actionText="Delete"
     >
-      {/* TODO Maybe change this to display some details with a GET project fetch because editing is implemented */}
-      Are you sure you want to delete this project?
+      {loadedProject && (
+        <Summary
+          loadedProject={loadedProject}
+          mode="delete"
+          invalidMessage={invalidMessage}
+        />
+      )}
     </Modal>
   );
 };

@@ -1,5 +1,5 @@
 // * Edit AND add project same modal => determined by props
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { dateFormatter } from "../../../util/dateFormatter";
 
 import Modal from "../../UI/Modal/Modal";
@@ -82,7 +82,6 @@ const EditProject = ({
       }
 
       console.log(json);
-      // TODO !!! Incoporate user feedback modal and update projects state like in delete (loading, done etc)
       window.location.reload();
     } catch (error) {
       console.log(error);

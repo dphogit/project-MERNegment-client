@@ -11,6 +11,7 @@ const initialAuthForm = {
   profilePicture: null,
 };
 
+// TODO Make the Authentication Page responsive
 const AuthForm = ({ setError, setIsAuth, setToken, setAutoLogout }) => {
   const [isSignIn, setIsSignIn] = useState(true);
   const [formData, setFormData] = useState(initialAuthForm);

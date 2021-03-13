@@ -9,6 +9,8 @@ import EditProfile from "./components/EditProfile/EditProfile";
 // import ErrorHandler from "./components/UI/ErrorHandler/ErrorHandler";
 import "./App.css";
 
+// TODO !!! For All Modal Components implement UI/UX for loading and completed actions
+
 const App = ({ history, location }) => {
   const [isAuth, setIsAuth] = useState(false);
   const [token, setToken] = useState(null);
@@ -41,7 +43,7 @@ const App = ({ history, location }) => {
     setIsAuth(true);
     setToken(token);
     setUserId(userIdToSet);
-    // TODO set up the current page they are on in local storage for easy reload => when getuser is outsourced into App.js/Redux
+    // FIXME set up the current page they are on in local storage for easy reload
     // if (localStorage.getItem("currentRoute")) {
     //   history.push(localStorage.getItem("currentRoute"));
     // }

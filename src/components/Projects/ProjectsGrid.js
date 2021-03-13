@@ -7,6 +7,7 @@ const ProjectsGrid = ({
   projects,
   setProjectId,
   setLoadedProject,
+  mode,
 }) => {
   return (
     <div className="container">

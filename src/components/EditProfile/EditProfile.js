@@ -61,7 +61,6 @@ const EditProfile = ({ user, token }) => {
         validationMessageHandler(json.message);
         throw new Error(json.message);
       }
-      // TODO !!! Incoporate user feedback modal (loading, done etc)
       window.location.reload();
       console.log(json);
     } catch (error) {

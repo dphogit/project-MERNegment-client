@@ -1,6 +1,5 @@
 .AddBtn {
-  width: auto;
-  margin: 12px 0 24px;
+  margin: 12px;
   background-color: #293241;
   color: white;
   font-size: 20px;
@@ -9,4 +8,48 @@
 .AddBtn:hover {
   opacity: 0.9;
   color: white;
+}
+
+.Dashboard {
+  display: flex;
+  width: 100%;
+  justify-content: flex-end;
+}
+
+.DashboardText {
+  display: flex;
+  align-items: center;
+  width: 45%;
+  margin: 12px 54px;
+}
+
+.DashboardControls {
+  display: flex;
+  justify-content: flex-end;
+  margin: 12px 36px;
+  width: 55%;
+}
+
+.AddProjectWrapper {
+  margin: 24px 12px;
+}
+
+@media screen and (max-width: 992px) {
+  .Dashboard {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .DashboardText {
+    width: 100%;
+    justify-content: center;
+    height: 50px;
+    margin-top: 32px;
+    margin-bottom: 32px;
+  }
+
+  .DashboardText h2 {
+    text-align: center;
+  }
 }

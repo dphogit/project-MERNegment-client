@@ -1,6 +1,7 @@
 .ProjectCard {
   width: 325px;
   height: 300px;
+  margin: auto;
 }
 
 .CardHeader {
@@ -55,4 +56,12 @@
 
 .SingleAvatar {
   margin: 0 8px;
+}
+
+.Overdue {
+  border: 1px solid red;
+  background-color: #fda49a;
+  color: red;
+  text-align: center;
+  padding: 4px;
 }

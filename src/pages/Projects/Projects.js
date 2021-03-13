@@ -6,6 +6,7 @@ import Button from "../../components/UI/Button/Button";
 import ProjectsGrid from "../../components/Projects/ProjectsGrid";
 import EditProject from "../../components/Projects/EditProject/EditProject";
 import DeleteProject from "../../components/Projects/DeleteProject/DeleteProject";
+import JoinProject from "../../components/Projects/JoinOrLeaveProject/JoinOrLeaveproject";
 import Paginator from "../../components/UI/Paginator/Paginator";
 import classes from "./Projects.module.css";
 
@@ -13,19 +14,15 @@ import classes from "./Projects.module.css";
 const PROJECTS_PER_PAGE = 6;
 const DEFAULT_PAGE = 1;
 
-/* TODO Design Projects Page designed in FIGMA 
-= Pagination
-- Search Form
-- Dashboard 
-*/
-
 const Projects = ({ logoutHandler, activePath, setActivePath, user }) => {
+  // TODO !! Clean up redundant state e.g. projectID is superseded by loadedProject => clean up EditProject to not rely on projectIdSelected state
   const [isEditMode, setIsEditMode] = useState(false);
   const [projectIdSelected, setProjectIdSelected] = useState(null);
   const [projects, setProjects] = useState([]);
   const [loadedProject, setLoadedProject] = useState(null);
   const [currentPage, setCurrentPage] = useState(DEFAULT_PAGE);
   const [totalProjects, setTotalProjects] = useState(null);
+  const [joinOrLeave, setJoinOrLeave] = useState("join");
 
   const getProjects = async (direction = null) => {
     let page = currentPage;
@@ -65,6 +62,16 @@ const Projects = ({ logoutHandler, activePath, setActivePath, user }) => {
     localStorage.setItem("currentRoute", "/projects");
   }, []);
 
+  // joinOrLeave === "join" check to prevent infinite re-rendering
+  if (loadedProject && joinOrLeave === "join") {
+    const userId = localStorage.getItem("userId");
+    // Filter through the team in the loaded project and check if the logged in user id is in the loaded project team. Sets to leaving mode.
+    const matched = loadedProject.team.filter((user) => user._id === userId);
+    if (matched.length) {
+      setJoinOrLeave("leave");
+    }
+  }
+
   return (
     user &&
     projects && (
@@ -74,41 +81,58 @@ const Projects = ({ logoutHandler, activePath, setActivePath, user }) => {
           activePath={activePath}
           profilePictureUrl={user.profilePictureUrl}
         />
-        <Button
-          btnType="toggle-modal"
-          className={`btn ${classes.AddBtn}`}
-          modalIdTarget="editProject"
-          clickEvent={() => {
-            setIsEditMode(false);
-          }}
-        >
-          + Add Project
-        </Button>
-        <EditProject
-          editMode={isEditMode}
-          setIsEditMode={setIsEditMode}
-          projectIdToEdit={projectIdSelected}
-          setProjectId={setProjectIdSelected}
-          loadedProject={loadedProject}
-          setLoadedProject={setLoadedProject}
-        />
-        <DeleteProject
-          projectIdToDelete={projectIdSelected}
-          setProjectId={setProjectIdSelected}
-          setProjects={setProjects}
-        />
-        <ProjectsGrid
-          setIsEditMode={setIsEditMode}
-          setProjectId={setProjectIdSelected}
-          projects={projects}
-          setLoadedProject={setLoadedProject}
-        />
-        <Paginator
-          onPrevious={getProjects}
-          onNext={getProjects}
-          lastPage={Math.ceil(totalProjects / PROJECTS_PER_PAGE)}
-          currentPage={currentPage}
-        />
+        <div className="container" id="content">
+          <div className={classes.Dashboard}>
+            <div className={classes.DashboardText}>
+              <h2>{totalProjects} projects to be completed!</h2>
+            </div>
+            <div className={classes.DashboardControls}>
+              <div className={classes.AddProjectWrapper}>
+                <Button
+                  btnType="toggle-modal"
+                  className={`btn ${classes.AddBtn}`}
+                  modalIdTarget="editProject"
+                  clickEvent={() => {
+                    setIsEditMode(false);
+                  }}
+                >
+                  + Add Project
+                </Button>
+              </div>
+              <Paginator
+                onPrevious={getProjects}
+                onNext={getProjects}
+                lastPage={Math.ceil(totalProjects / PROJECTS_PER_PAGE)}
+                currentPage={currentPage}
+              />
+            </div>
+          </div>
+          <EditProject
+            editMode={isEditMode}
+            setIsEditMode={setIsEditMode}
+            projectIdToEdit={projectIdSelected}
+            setProjectId={setProjectIdSelected}
+            loadedProject={loadedProject}
+            setLoadedProject={setLoadedProject}
+          />
+          <DeleteProject
+            setProjectId={setProjectIdSelected}
+            setProjects={setProjects}
+            loadedProject={loadedProject}
+          />
+          <JoinProject
+            loadedProject={loadedProject}
+            setLoadedProject={setLoadedProject}
+            mode={joinOrLeave}
+            setMode={setJoinOrLeave}
+          />
+          <ProjectsGrid
+            setIsEditMode={setIsEditMode}
+            setProjectId={setProjectIdSelected}
+            projects={projects}
+            setLoadedProject={setLoadedProject}
+          />
+        </div>
       </Fragment>
     )
   );
